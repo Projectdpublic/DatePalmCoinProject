@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=DatePalmCoin
+Comment=DatePalmCoin P2P Cryptocurrency
+Comment[ru]=DatePalmCoin, P2P криптовалюта
+Comment[fr]=DatePalmCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=DatePalmCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/DatePalmCoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/DatePalmCoin80.xpm
+MimeType=x-scheme-handler/DatePalmCoin;
+Categories=Office;

@@ -1,0 +1,2 @@
+debian/bin/DatePalmCoind usr/bin
+src/DatePalmCoind usr/lib/DatePalmCoin

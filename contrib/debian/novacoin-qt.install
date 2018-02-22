@@ -1,0 +1,5 @@
+DatePalmCoin-qt usr/bin
+share/pixmaps/DatePalmCoin32.xpm usr/share/pixmaps
+share/pixmaps/DatePalmCoin80.xpm usr/share/pixmaps
+debian/DatePalmCoin-qt.desktop usr/share/applications
+debian/DatePalmCoin-qt.protocol usr/share/kde4/services/

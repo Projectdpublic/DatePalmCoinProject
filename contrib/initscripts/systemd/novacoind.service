@@ -1,0 +1,11 @@
+[Unit]
+Description=DatePalmCoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=DatePalmCoin
+ExecStart=/opt/DatePalmCoin/DatePalmCoind
+
+[Install]
+WantedBy=multi-user.target

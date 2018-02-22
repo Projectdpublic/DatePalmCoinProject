@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: DatePalmCoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# DatePalmCoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable DatePalmCoin service.
+# DatePalmCoin_config (path): Set to /usr/local/etc/DatePalmCoin.conf by default.
+# DatePalmCoin_user:  The user account DatePalmCoin daemon runs as. It uses 'root' user by default.
+# DatePalmCoin_group: The group account DatePalmCoin daemon runs as. It uses 'wheel' group by default.
+# DatePalmCoin_datadir (str): Default to "/var/db/DatePalmCoin". Base data directory.
+
+. /etc/rc.subr
+
+name=DatePalmCoin
+rcvar=DatePalmCoin_enable
+
+: ${DatePalmCoin_enable:=NO}
+: ${DatePalmCoin_config=/usr/local/etc/DatePalmCoin.conf}
+: ${DatePalmCoin_datadir=/var/db/DatePalmCoin}
+: ${DatePalmCoin_user="root"}
+: ${DatePalmCoin_group="wheel"}
+
+required_files=${DatePalmCoin_config}
+command=/usr/local/bin/DatePalmCoind
+DatePalmCoin_chdir=${DatePalmCoin_datadir}
+pidfile="${DatePalmCoin_datadir}/DatePalmCoind.pid"
+stop_cmd=DatePalmCoin_stop
+command_args="-conf=${DatePalmCoin_config} -datadir=${DatePalmCoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+DatePalmCoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${DatePalmCoin_datadir}
+	[ $? -eq 0 ] && chown -R ${DatePalmCoin_user}:${DatePalmCoin_group} ${DatePalmCoin_datadir}
+}
+
+DatePalmCoin_prestart()
+{
+	if [ ! -d "${DatePalmCoin_datadir}/." ]; then
+		DatePalmCoin_create_datadir || return 1
+	fi
+}
+
+DatePalmCoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+DatePalmCoin_stop()
+{
+    DatePalmCoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${DatePalmCoin_config} -datadir=${DatePalmCoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"
