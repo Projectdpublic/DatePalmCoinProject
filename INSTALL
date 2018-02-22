@@ -1,0 +1,9 @@
+Building DatePalmCoin
+
+See doc/readme-qt.rst for instructions on building DatePalmCoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of DatePalmCoin.
+
+See doc/build-*.txt for instructions on building DatePalmCoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of DatePalmCoin.
